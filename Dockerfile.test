@@ -3,9 +3,15 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
+# Copiar los dos archivos de dependencias
+COPY app/requirements.txt .
 COPY app/requirements-dev.txt .
+
+# Instalar dependencias de produccion y pruebas
 RUN pip install --no-cache-dir -r requirements-dev.txt
 
+# Copiar el codigo y las pruebas
 COPY app/ .
 
+# Ejecutar las pruebas automatizadas
 CMD ["python", "-m", "pytest", "-v", "-p", "no:cacheprovider"]
